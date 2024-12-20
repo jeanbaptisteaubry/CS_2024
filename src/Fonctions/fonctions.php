@@ -18,7 +18,7 @@ function CalculComplexiteMdp($mdp) :int
     //Le mot de passe doit contenir au moins un caractère de chaque type suivant : majuscule, minuscule, chiffre, caractère spécial
     //Le mot de passe ne doit pas contenir de caractère accentué
 
-    $complexite = 0;
+    $complexite = 0; //la variable qui dira la complexité
     $nbCaracteres = strlen($mdp);
     $nbMajuscules = 0;
     $nbMinuscules = 0;
@@ -38,7 +38,7 @@ function CalculComplexiteMdp($mdp) :int
         } elseif (preg_match('/[!@#$%^&*()\-_=+{};:,<.>]/', $caractere)) {
             $nbSpeciaux++;
         } elseif (preg_match('/[éèêàùâûîôëïüö]/', $caractere)) {
-            $nbAccentues++;
+            $nbAcenctues++;
         } else {
             $nbAutres++;
         }
