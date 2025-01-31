@@ -40,7 +40,6 @@ switch ($action) {
         $entreprise = Modele_Entreprise::Entreprise_Select_ParId($_REQUEST["idEntreprise"]);
 
         $motDePasse = App\Fonctions\GenereMDP(10);
-        Modele_Entreprise::Entreprise_Modifier_motDePasse($_REQUEST["idEntreprise"], $motDePasse); //$entreprise["numCompte"]
 
         $mail = new PHPMailer();
         $mail->isSMTP();
@@ -60,6 +59,8 @@ switch ($action) {
                 $msg = 'Désolé, quelque chose a mal tourné. Veuillez réessayer plus tard.';
             } else {
                 $msg = 'Message envoyé ! Merci de nous avoir contactés.';
+                Modele_Entreprise::Entreprise_Modifier_motDePasse($_REQUEST["idEntreprise"], $motDePasse); //$entreprise["numCompte"]
+
             }
         } else {
             $msg = 'Il doit manquer qqc !';

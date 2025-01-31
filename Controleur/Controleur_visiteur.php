@@ -37,7 +37,7 @@ switch ($action) {
         if ($_REQUEST["NouveauPassword"] == $_REQUEST["ConfirmPassword"]) {
             $Vue->setEntete(new Vue_Structure_Entete());
             $complexite = CalculComplexiteMdp($_REQUEST["NouveauPassword"]);
-            if ($complexite < 90) {
+            if ($complexite < 45) {
                 $Vue->addToCorps(new Vue_Utilisateur_Changement_MDPForce("<label><b>Le mot de passe doit avoir une complexite d'au moins 90. Ici elle juste est de $complexite. Vous pouvez augmenter la longueur, le type de caractères (majuscule, miniscule, numérique, caractère spécial)</b></label>"));
 
             } else {

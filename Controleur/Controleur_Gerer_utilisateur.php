@@ -45,13 +45,10 @@ switch ($action) {
             $listeNiveauAutorisation = Modele_categorie_utilisateur::categorie_utilisateur_Select();
              $Vue->addToCorps(new Vue_Utilisateur_Formulaire(false, $listeNiveauAutorisation, $Utilisateur["idUtilisateur"], $Utilisateur["login"], $Utilisateur["idCategorie_utilisateur"]));
             $Vue->addToCorps(new Vue_AfficherMessage("<br><label><b>Erreur : Vous ne pouvez pas réinitialiser le mot de passe tant que le login n'a pas la forme d'un mail</b></label>"));
-
-
         }
         else {
             $nouveauMdp = GenereMDP(12);
             $resultat=envoyerMail("administration@cafe.local", "Administrateur café", $Utilisateur["login"],$Utilisateur["login"],  "Réinitialisation de votre mot de passe", "Votre nouveau mot de passe est : " . $nouveauMdp);
-
             switch ($resultat)
             {
                 case -1 :
