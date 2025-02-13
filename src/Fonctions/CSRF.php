@@ -54,7 +54,7 @@ function verifierCSRF(): int
             return -3;
 
     if (isset($_SESSION["CSRF"])) {
-        if ($valeurCSRFProposée == $_SESSION["CSRF"]) {    // On est bien !
+        if ($valeurCSRFProposee == $_SESSION["CSRF"]) {    // On est bien !
             unset($_SESSION["CSRF"]);
             return 1;
         } else {
