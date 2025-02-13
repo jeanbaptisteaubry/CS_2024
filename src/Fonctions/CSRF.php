@@ -45,12 +45,13 @@ function genereVarHrefCSRF(): string
  */
 function verifierCSRF(): int
 {
-    if (!isset($_SESSION["CSRF"]) && !isset($_REQUEST["CSRF"])) {
-        return -2;
-    }
-    if (!isset($_REQUEST["CSRF"]) && isset($_SESSION["CSRF"]))
-        return -3;
-    $valeurCSRFProposée = $_REQUEST["CSRF"];
+    if (isset($_REQUEST["CSRF"]) && isset($_SESSION["CSRF"])) {
+        $valeurCSRFProposee = $_REQUEST["CSRF"];
+    } else
+        if (!isset($_REQUEST["CSRF"]) && !isset($_SESSION["CSRF"]))
+            return -2;
+        else
+            return -3;
 
     if (isset($_SESSION["CSRF"])) {
         if ($valeurCSRFProposée == $_SESSION["CSRF"]) {    // On est bien !
