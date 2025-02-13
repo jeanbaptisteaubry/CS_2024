@@ -42,11 +42,10 @@ if (isset($_REQUEST["action"]))
     $action = $_REQUEST["action"];
 else
     $action = "Action_Par_Defaut";
-//error_log("action : " . $action);
-//utiliser en débuggage pour avoir le type de connexion
-//$Vue->addToCorps(new Vue_AfficherMessage("<br>Action $action<br>"));
+
+
 $etatCSRF = verifierCSRF();
-if ($etatCSRF == -1) {
+if ($etatCSRF == -1 || $etatCSRF == -3) {
     session_destroy();
     unset($_SESSION);
     $Vue->addToCorps(new Vue_Connexion_Formulaire_client("Erreur CSRF, vous reconnecter"));
@@ -78,7 +77,7 @@ if (isset($_REQUEST["token"])) {
         case "gestionnaireCatalogue":
         case "commercialCafe":
         case "administrateurLogiciel":
-            if (!$etatCSRF == 2) {
+            if (!$etatCSRF == 1) {
                 session_destroy();
                 unset($_SESSION);
                 $Vue->addToCorps(new Vue_Connexion_Formulaire_client("Erreur CSRF, vous reconnecter"));
@@ -110,7 +109,7 @@ if (isset($_REQUEST["token"])) {
             break;
         case "entrepriseCliente" :
         case "salarieEntrepriseCliente" :
-            if (!$etatCSRF == 2) {
+            if (!$etatCSRF == 1) {
                 session_destroy();
                 unset($_SESSION);
                 $Vue->addToCorps(new Vue_Connexion_Formulaire_client("Erreur CSRF, vous reconnecter"));

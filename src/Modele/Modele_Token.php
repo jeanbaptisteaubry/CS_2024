@@ -8,7 +8,7 @@ use PDO;
 class Modele_Token
 {
 
-    static function Salarie_CreerToken( $codeAction, $idUtilisateur, $dateFin):string
+    static function Token_CreerPourUtilisateur($codeAction, $idUtilisateur, $dateFin):string
     {
         $connexionPDO = Singleton_ConnexionPDO::getInstance();
         $octetsAleatoires = openssl_random_pseudo_bytes (256) ;
