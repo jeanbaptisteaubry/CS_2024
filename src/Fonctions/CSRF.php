@@ -1,5 +1,3 @@
-Voici le code du fichier : /src/Fonction/CRSF.php
-
 <?php
 
 /***
