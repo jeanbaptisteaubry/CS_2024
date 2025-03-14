@@ -84,7 +84,7 @@ function genereVarHrefCSRF(): string
  *                0 : il n'y a pas de jeton CSRF en session;
  *                1 : le jeton est valide
  */
-
+ $memoIGlobal =  -1;
 function verifierCSRF(): int
 {
 
@@ -111,9 +111,10 @@ function verifierCSRF(): int
 
         if ($etatTrouve == 1) {//Le jeton est trouvé, on incrémente son nombre d'usages.
             $_SESSION["CSRF"][$memoI]["nbUsage"]++;
-
             //On mémorise le jeton CSRF Consommé par cette page
             $_SESSION["CSRFConsomme"] = $valeurCSRFProposee;
+            global $memoIGlobal;
+            $memoIGlobal = $memoI;
         }
         return $etatTrouve;
     }
@@ -127,5 +128,6 @@ function verifierCSRF(): int
 function direIsReload(): bool
 {
     $nb = count($_SESSION["CSRF"]);
-    return $_SESSION["CSRF"][$nb - 1]["isReload"];
+    global $memoIGlobal;
+    return $_SESSION["CSRF"][$memoIGlobal]["isReload"];
 }

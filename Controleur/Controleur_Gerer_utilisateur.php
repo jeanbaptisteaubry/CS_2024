@@ -81,26 +81,34 @@ switch ($action) {
 
         break;
     case "buttonCreerUtilisateur":
-        // On regarde si le login est disponible : il ne faut pas que deux personnes aient le même login !
-        $login_nouveau = $_REQUEST["login"];
-        $listeUtilisateur = Modele_Utilisateur:: Utilisateur_Select_Cafe();
-        $login_deja_attribue = false;
-        for ($i = 0; $i < count($listeUtilisateur); $i++) {
-            $iemeUtilisateur = $listeUtilisateur[$i];
-            if ($login_nouveau == $iemeUtilisateur["login"]) {
-                $login_deja_attribue = true;
+        if(direIsReload() == false) {
+            // On regarde si le login est disponible : il ne faut pas que deux personnes aient le même login !
+            $login_nouveau = $_REQUEST["login"];
+            $listeUtilisateur = Modele_Utilisateur:: Utilisateur_Select_Cafe();
+            $login_deja_attribue = false;
+            for ($i = 0; $i < count($listeUtilisateur); $i++) {
+                $iemeUtilisateur = $listeUtilisateur[$i];
+                if ($login_nouveau == $iemeUtilisateur["login"]) {
+                    $login_deja_attribue = true;
+                }
+            }
+            if ($login_deja_attribue == true) {
+                $listeNiveauAutorisation = Modele_categorie_utilisateur::categorie_utilisateur_Select();
+                $Vue->addToCorps(new Vue_Utilisateur_Formulaire(true, $listeNiveauAutorisation));
+                $Vue->addToCorps(new Vue_AfficherMessage("<br><label><b>Erreur : Ce login est déjà attribué, veuillez saisir un autre login</b></label>"));
+            } else {
+                //Créer sur la fiche de création d'une utilisateurs
+                Modele_Utilisateur::Utilisateur_Creer($_REQUEST["login"], "secret", $_REQUEST["codeCategorie"]);
+                //Redirect_Self_URL();
+                $listeUtilisateur = Modele_Utilisateur:: Utilisateur_Select_Cafe();
+                $Vue->addToCorps(new Vue_Utilisateur_Liste($listeUtilisateur, "Utilisateur créé"));
             }
         }
-        if ($login_deja_attribue == true) {
+        else
+        {
             $listeNiveauAutorisation = Modele_categorie_utilisateur::categorie_utilisateur_Select();
             $Vue->addToCorps(new Vue_Utilisateur_Formulaire(true, $listeNiveauAutorisation));
-            $Vue->addToCorps(new Vue_AfficherMessage("<br><label><b>Erreur : Ce login est déjà attribué, veuillez saisir un autre login</b></label>"));
-        } else {
-            //Créer sur la fiche de création d'une utilisateurs
-            Modele_Utilisateur::Utilisateur_Creer($_REQUEST["login"], "secret", $_REQUEST["codeCategorie"]);
-            //Redirect_Self_URL();
-            $listeUtilisateur = Modele_Utilisateur:: Utilisateur_Select_Cafe();
-            $Vue->addToCorps(new Vue_Utilisateur_Liste($listeUtilisateur, "Utilisateur créé"));
+
         }
 
         break;
